@@ -1,0 +1,61 @@
+<!--index.wxml-->
+<!--推荐品轮播图-->
+<swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="{{circular}}">
+  <view wx:for="{{imgUrls}}">
+    <swiper-item>
+      <image style="width:{{imagewidth}}px; height:{{imageheight}}px;" bindload="imageLoad" src="{{item.url}}" />
+    </swiper-item>
+  </view>
+</swiper>
+<!--搜索栏-->
+<view class="search">
+  <image class="input-ico" src="../pics/search.jpg" style="width:20px;height:20px" />
+  <input class="input" confirm-type='search' placeholder='搜索' bindtap='searchtxt' />
+</view>
+<!--商品分类栏-->
+<view>
+  <view class="list">
+    <view class="adsort">
+      <view wx:for="{{sorts}}" bindtap='switchPageFromSort' id='{{item.sid}}' >
+        <view>
+          <image class="list-img" mode="aspectFill" src="{{item.spath}}" />
+        </view>
+        <view class="adsorttext">
+          <text>{{item.sname}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+  <!--分隔线-->
+  <view>
+    <image class="mainlogo" mode="aspectFit" src="../pics/ad.jpg" />
+  </view>
+</view>
+<!--推荐商品-->
+<!--最外层-->
+<view>
+  <!--循环显示-->
+  <view wx:for="{{goodsInfo}}"  class="allgood">
+    <view class='single'>
+      <!--单个商品详细信息-->
+      <view class="adgoods single">
+      <view bindtap="ShowImage" id="{{item.path}}" >
+        <image style='width:{{adgoods_w}}px;height:{{adgoods_h}}px' bindload="adgoods" mode="scaleToFill" src="{{item.path}}" />
+        </view>
+        <view style="display:fles;flex-direction:row;"bindtap='clickAdGoods' id='{{item.id}}'>
+          <view class="adgname">
+            <text>{{item.name}}</text>
+          </view>
+          <view class="adgprice">
+            <view >{{item.price}} </view>
+            <view >{{item.pricetype}}</view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+<!-- 
+<button open-type="getUserInfo" bindgetuserinfo='onGotUserInfo'>123</button> 
+-->
+<image class="mainlogo" mode="aspectFit" src='../pics/nomore.png' />

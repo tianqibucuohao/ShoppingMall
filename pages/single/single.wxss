@@ -1,0 +1,10 @@
+.img{
+  width: 100px;
+  height: 100px;
+}
+.show {
+  background-color: red; 
+}
+.hide {
+  display: none;
+}

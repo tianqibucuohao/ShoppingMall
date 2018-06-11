@@ -1,0 +1,41 @@
+/* pages/list/list.wxss */
+.input{
+  margin-top:20px;
+  background-color: #ff00ff;
+  margin-right: 50px;
+  border:#aaa 2px solid;
+  border-radius: 40px;
+}
+
+.Separate{
+  width:100%;
+  height: 60px;
+}
+.allgoods{
+  display: flex;
+  flex-direction: row;
+  width:100%;
+}
+.singlegoods {
+  display: flex;  
+  flex-direction: row;  
+  margin-top:10px;
+  width:100%;
+  
+  margin-left: 5%;
+}
+.singlegoodsname{
+  display: flex;  
+  flex-direction: column;  
+  margin-top:15px;
+  margin-left:10px;
+  color: black;
+}
+.singlegoodsprice{
+  display: flex;
+  flex-direction: row;
+  margin-left:10px;
+  margin-top:20px;
+  margin-right: 10px;
+  color: red;
+}

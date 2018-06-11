@@ -1,0 +1,106 @@
+/**index.wxss**/
+.userinfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.userinfo-avatar {
+  width: 128rpx;
+  height: 128rpx;
+  margin: 200rpx;
+  border-radius: 50%;
+}
+
+.userinfo-nickname {
+  color: #aaa;
+}
+
+.usermotto {
+  margin-top: 100px;
+}
+.search{
+  display: flex;  
+  flex-direction: row;  
+}
+
+.search-ico{
+  margin-left:20px;
+  margin-top:20px;
+}
+.input{
+  margin-top:20px;
+  background-color: #ff00ff;
+  margin-right: 50px;
+  border:#aaa 2px solid;
+  border-radius: 40px;
+}
+.input-ico{
+  margin-left:20px;
+  margin-top:20px;
+  margin-right: 20px;
+  background-color: #ff00ff;
+}
+.list{
+  display: flex;  
+  flex-direction: row;  
+  margin-right:5px;
+}
+.list-img{
+  margin-left: 5px;
+  margin-right: 5px;
+  width: 80px;
+  height: 80px;
+}
+.mainlogo{
+  width:100%;
+  height: 60px;
+}
+.ad{
+  margin-left: 100px;
+  width:45%;
+  color:#ff00ff;
+}
+.allgood{
+  display: flex;  
+  flex-direction: row; 
+  width:100%;
+}
+.adgoods{
+  display: flex;  
+  flex-direction: row;  
+  margin-top:10px;
+  margin-left: 5%;
+}
+.adgname{
+  display: flex;  
+  flex-direction: column;  
+  margin-top:15px;
+  margin-left:10px;
+  color: black;
+}
+.adgprice{
+  display: flex;
+  flex-direction: row;
+  margin-left:10px;
+  margin-top:20px;
+  margin-right: 10px;
+  color: red;
+}
+.adsort{
+  display: flex;  
+  flex-direction: row;  
+  margin-left: 5px;
+  margin-right:5px;
+}
+.adsorttext{
+  margin-left:25px;
+  margin-top:5px;
+}
+.single{
+  display: flex;  
+  flex-direction: row;  
+  margin-left:5%;
+  width: 90%;
+
+}

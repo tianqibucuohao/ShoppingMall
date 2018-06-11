@@ -1,0 +1,58 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/logs/logs",
+    "pages/sort/sort",
+    "pages/trolley/trolley",
+    "pages/person/person",
+    "pages/list/list",
+    "pages/single/single"
+  ],
+  "window": {
+    "backgroundTextStyle": "gray",
+    "navigationBarBackgroundColor": "#f000f0",
+    "navigationBarTitleText": "我的店铺",
+    "navigationBarTextStyle": "black",
+    "enablePullDownRefresh":true
+  },
+   "networkTimeout": {
+    "request": 20000,
+    "connectSocket": 20000,
+    "uploadFile": 20000,
+    "downloadFile": 20000
+  },
+  "tabBar": {
+    "color":"#A0A0f0",
+    "selectedColor":"#00ff00",
+    "backgroundColor":"#f0fff0",
+    "borderStyle":"white",
+    "position":"bottom",
+    "font-size":20,
+    "list": [{
+      "pagePath": "pages/index/index",
+      "text": "主页",
+      "iconPath": "icon/icon.png",
+    "selectedIconPath":"icon/main.jpg"
+    },
+    {
+      "pagePath": "pages/sort/sort",
+      "text": "分类",
+      "iconPath":"icon/search.jpg",
+      "selectedIconPath":"icon/icon_rcol.png"
+    },
+    {
+      "pagePath":"pages/trolley/trolley",
+      "text": "购物篮",
+      "iconPath":"icon/shopcat.jpg",
+      "selectedIconPath":"icon/shoppingcart2.jpg"
+    },
+    {
+      "pagePath":"pages/person/person",
+      "text":"我的",
+      "iconPath": "icon/icon_man.png",
+      "selectedIconPath": "icon/icon_woman.png"
+    }
+    ],
+    "debug":true
+  }
+}

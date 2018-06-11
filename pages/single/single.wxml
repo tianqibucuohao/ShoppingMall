@@ -1,0 +1,32 @@
+<view>
+<view>
+<text>{{name}}</text>
+</view>
+<view>
+<text>{{price}}</text>
+</view>
+<view>
+<text>{{desc}}</text>
+</view>
+<view>
+<text>{{count}}</text>
+</view>
+<view>
+<text>{{sum}}</text>
+</view>
+<button type="primary" size="{{primarySize}}" loading="{{loading}}" plain="{{plain}}" 
+        disabled="{{disabled}}" bindtap="Add" id='{{gid}}' > primary </button>
+       
+<button type="warn" size="{{warnSize}}" loading="{{loading}}" plain="{{plain}}"
+        disabled="{{disabled}}" bindtap="reduce"id='{{gid}}'> warn </button>
+</view>
+<swiper indicator-dots="true" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="{{circular}}">
+  <view wx:for="{{imgUrls}}"bindtap="ShowImg" id="{{item.url}}">
+    <swiper-item>
+      <image class="img" src="{{item.url}}" />
+    </swiper-item>
+  </view>
+</swiper>
+<view class="{{bShowDelete?'show':'hide'}}">
+  <button bindtap="deletethis">删除该商品</button>
+</view>

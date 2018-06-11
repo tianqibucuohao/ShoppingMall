@@ -1,0 +1,7 @@
+/* pages/sort/sort.wxss */
+
+.input {
+  margin-left: 10px;
+  margin-right: 10px;
+  background-color: #ff0000;
+}

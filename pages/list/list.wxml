@@ -1,0 +1,27 @@
+<!-- 顶部有搜索栏-->
+<view>
+  <input class="input" placeholder='搜索' type='text' auto-focus='true' value='{{title}}' />
+  <image class='Separate' mode="aspectFit" src="../pics/ad.jpg" />
+</view>
+<!--所有商品列表方式显示-->
+<view>
+  <view wx:for="{{goodsInfo}}" class="allgoods">
+    <view style="display:fles;flex-direction:column;">
+      <view class="singlegoods">
+      <view bindtap='ShowImage' id ='{{item.path}}'>
+        <image mode="aspectFit" style='width:{{imggoods_w}}px;height:{{imggoods_h}}px' bindload="Resize" mode="scaleToFill" src="{{item.path}}" />
+        </view>
+        <view style="display:fles;flex-direction:row;"bindtap='clickGoods'  id='{{item.id}}'>
+          <view class="singlegoodsname">
+            <text>{{item.name}}</text>
+          </view>
+          <view class="singlegoodsprice">
+            <text>{{item.price}}</text>
+            <text>{{item.pricetype}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+<image class="Separate" mode="aspectFit" src='../pics/nomore.png' />
