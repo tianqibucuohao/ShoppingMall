@@ -287,12 +287,10 @@ Page({
     })
   },
   showloading:function() {
-    wx.showLoading({
-      title: '加载中',
-    })
+    common.showloading()
   },
   hideing:function() {
-    wx.hideLoading();
+    common.hideloading()
   },
   ShowImg:function(urls) {
     console.log(urls);
@@ -325,7 +323,6 @@ Page({
             app.globalData.shop.goods.splice((i), 1); //  当前没有数量，删除该商品
           }
           common.SaveStorage('goods', app.globalData.shop);
-          bFind = true;
           break;
         }
       }

@@ -83,6 +83,9 @@ function GetNetType() {
   return bRet;
 }
 
+/*
+* 提示类
+*/
 // 显示繁忙提示
 var showBusy = text => wx.showToast({
   title: text,
@@ -105,6 +108,15 @@ var showModel = (title, content) => {
     showCancel: false
   })
 };
+function showloading() {
+  wx.showLoading({
+    title: '加载中',
+  })
+};
+function hideloading() {
+  wx.hideLoading();
+}
+//
 var extend = function extend(target) {
   var sources = Array.prototype.slice.call(arguments, 1);
 
@@ -182,6 +194,16 @@ function PostMobileInfo() {
     }
   })
 }
+/*
+* 分享给朋友
+*/
+function ShareToFriends(){
+  console.log("on share app message")
+  return {
+    title: '在线购物',
+    path: '/page/index/index'
+  }
+}
 
 /*
 登录相关
@@ -196,5 +218,8 @@ module.exports = {
   ResizeImg: ResizeImg,
   ShowImage:ShowImage,
   SaveStorage: SaveStorage,
-  GetStorage: GetStorage
+  GetStorage: GetStorage,
+  ShareToFriends: ShareToFriends,
+  showloading:showloading,
+  hideloading: hideloading
 }

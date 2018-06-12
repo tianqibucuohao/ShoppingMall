@@ -75,9 +75,7 @@ Page({
   },
 
   GetLittleSort: function (e) {
-    wx.showLoading({
-      title: '加载中',
-    })
+    common.showloading();
     var that = this;
     //    console.log("sortid="+e);
     var Url = app.globalData.host + 'sort.php?sortid=' + e;
@@ -110,7 +108,7 @@ Page({
     })
   },
   suc: function (e) {
-    wx.hideLoading()
+    common.hideloading();
   },
   clickGoods: function (ev) {
     console.log('当前goods.id=' + ev.currentTarget.id);

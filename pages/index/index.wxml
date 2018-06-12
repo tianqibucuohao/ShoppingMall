@@ -10,7 +10,7 @@
 <!--搜索栏-->
 <view class="search">
   <image class="input-ico" src="../pics/search.jpg" style="width:20px;height:20px" />
-  <input class="input" confirm-type='search' placeholder='搜索' bindtap='searchtxt' />
+  <input class="input" confirm-type='search' placeholder='搜索' />
 </view>
 <!--商品分类栏-->
 <view>

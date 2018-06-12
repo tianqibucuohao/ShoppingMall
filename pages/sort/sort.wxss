@@ -1,7 +1,13 @@
 /* pages/sort/sort.wxss */
 
-.input {
-  margin-left: 10px;
-  margin-right: 10px;
-  background-color: #ff0000;
+.input{
+  margin-top:20px;
+  background-color: #ff00ff;
+  margin-right: 50px;
+  border:#aaa 2px solid;
+  border-radius: 40px;
+}
+.Separate{
+  width:100%;
+  height: 60px;
 }

@@ -1,1 +1,8 @@
-<input class="input"placeholder='搜索' />
+<view>
+  <input class="input" placeholder='搜索' type='text' auto-focus='true' value='{{title}}' />
+  <image class='Separate' mode="aspectFit" src="../pics/ad.jpg" />
+</view>
+<view>
+<view>
+</view>
+</view>

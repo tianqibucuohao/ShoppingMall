@@ -79,9 +79,7 @@ Page({
   },
   getDataFromIf:function()
   {
-    wx.showLoading({
-      title: '加载中',
-    })
+    common.showloading();
     var that = this;
     wx.request({
       url: app.globalData.host +'a.php',
@@ -112,10 +110,10 @@ Page({
     })
   },
   suc:function(e) {
-    wx.hideLoading()
+    common.hideloading();
   },
   onShow:function(){
-    console.log("show####");
+  
   },
   imageLoad: function (e) {
     var imageSize = common.imageUtil(e)
@@ -189,6 +187,8 @@ Page({
   },
   searchtxt:function(e){
     console.log('search==='+e);
-  }
-    
+  },
+  onShareAppMessage: function () {
+    common.ShareToFriends();
+  },
 })
