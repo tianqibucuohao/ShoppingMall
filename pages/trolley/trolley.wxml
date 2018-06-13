@@ -30,3 +30,6 @@
     </view>
   </view>
 </view>
+<view>
+<button bindtap="buy">付款</button>
+</view>

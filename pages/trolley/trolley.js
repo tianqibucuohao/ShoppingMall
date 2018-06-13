@@ -83,6 +83,32 @@ Page({
     wx.navigateTo({
       url: Url
     })
+  },
+  buy :function() {
+    console.log('buy them all');
+    var Url = app.globalData.host+'gen.php';
+    wx.request({
+      url: Url,
+      method: 'POST',
+      header: {
+        'Content-Type': 'application/json'
+      },
+      dataType: "json",
+      data:{
+        bill:app.globalData.shop.goods,
+        sum:app.globalData.shop.sum,
+        date:app.globalData.shop.date
+      },
+      success: function (res) {
+        console.log(res.data)
+      },
+      fail: function(res) {
+        console.log(res);
+      },
+      complete:function() {
+        console.log('post complete');
+      }
+    })
   }
 
 })

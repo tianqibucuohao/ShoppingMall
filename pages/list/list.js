@@ -115,15 +115,23 @@ Page({
     var x = ev.currentTarget.id;
     var id = 0;
     var name = '';
+    var price = 0;
+    var discount = 0;
+    var desc = '';
+    var pricetype = 0;
     var i = 0;
     for (i = 0; i < this.data.goodsInfo.length; i++) {
       if (this.data.goodsInfo[i].id == x) {
         id = this.data.goodsInfo[i].id;
         name = this.data.goodsInfo[i].name;
+        price = this.data.goodsInfo[i].price;
+        discount = this.data.goodsInfo[i].discount;
+        desc = this.data.goodsInfo[i].desc;
+        pricetype = this.data.goodsInfo[i].pricetype;
         break;
       }
     }
-    var Url = '/pages/single/single?goodsid=' + id + '&title=' + name;
+    var Url = '/pages/single/single?goodsid=' + id + '&title=' + name +'&desc='+ desc + '&price=' + price + '&discount=' + discount + '&pricetype=' + pricetype;
     console.log(Url);
     wx.navigateTo({
       url: Url

@@ -109,20 +109,6 @@ Page({
   onPullDownRefresh: function () {
     console.log("on pull down refresh")
   },
-
-  /**
-   * 页面滚动触发事件的处理函数
-   */
-  onPageScroll: function (scrollTop) {
-    console.log("on page scroll")
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-    console.log("on reach bottome")
-  },
   /**
    * 用户点击右上角分享
    */

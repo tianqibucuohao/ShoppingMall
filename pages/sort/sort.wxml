@@ -3,6 +3,24 @@
   <image class='Separate' mode="aspectFit" src="../pics/ad.jpg" />
 </view>
 <view>
-<view>
-</view>
+  <view>
+    <view class='table'>
+      <view>
+        <view wx:for="{{sorts}}" wx:key="sid" wx:for-item="s" class="s1" ><view bindtap="clickSort" id='{{s.sid}}'>{{s.sname}}==</view>
+          <view>
+            <view wx:for="{{goods}}" wx:key="id" wx:for-item="g" >
+            <view wx:if="{{s.sid == g.sort}}"class="g1" bindtap="clickGoods" id="{{g.id}}">
+              <view >
+                {{g.name}}
+              </view>
+              <view>
+                {{g.price}}
+              </view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
 </view>

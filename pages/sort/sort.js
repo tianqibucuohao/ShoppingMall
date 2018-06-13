@@ -7,7 +7,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    
+    sorts:[],
+    goods:[]
   },
 
   /**
@@ -16,7 +17,8 @@ Page({
    */
   
   onLoad: function (options) {
-    
+    common.showloading();
+    this.GetAll();
     // 测试用户信息使用-非正式代码内容
     // if (app.globalData.userInfo) {
     //   this.setData({
@@ -156,5 +158,79 @@ Page({
     // this.setData({
     //   numberArray: this.data.numberArray
     // })
+  },
+  GetAll:function() {
+    var Url = app.globalData.host + 'all.php';
+    var that = this;
+    wx.request({
+      url: Url,
+      method: 'GET',
+      header: {
+        'Content-Type': 'application/json'
+      },
+      dataType: "json",
+      success: function (res) {
+        console.log(res.data)
+        if (res.statusCode == 200) {
+          var db = res.data
+          that.setData({
+            sorts: res.data.sorts,
+            goods: res.data.goods,
+          })
+
+        }
+      },
+      fail: function (res) {
+        console.log(res)
+      },
+      complete: function () {
+
+      }
+    })
+    common.hideloading();
+  },
+  clickSort:function(ev){
+    console.log('click sort='+ev.currentTarget.id);
+    var x = ev.currentTarget.id;
+    var id = 0;
+    var name = '';
+    for (var i = 0; i < this.data.sorts.length; i++) {
+      if (this.data.sorts[i].sid == x) {
+        id = this.data.sorts[i].sid;
+        name = this.data.sorts[i].sname;
+      }
+    }
+    var Url = '/pages/list/list?sortid=' + id + '&title=' + name;
+    console.log(Url);
+    wx.navigateTo({
+      url: Url
+    })
+  }, 
+  clickGoods:function(ev){
+    console.log('click goods='+ev.currentTarget.id);
+    var x = ev.currentTarget.id;
+    var id = 0;
+    var name = '';
+    var price = 0;
+    var discount = 0;
+    var desc = '';
+    var pricetype = 0;
+    var i = 0;
+    for (i = 0; i < this.data.goods.length; i++) {
+      if (this.data.goods[i].id == x) {
+        id = this.data.goods[i].id;
+        name = this.data.goods[i].name;
+        price = this.data.goods[i].price;
+        discount = this.data.goods[i].discount;
+        desc = this.data.goods[i].desc;
+        pricetype = this.data.goods[i].pricetype;
+        break;
+      }
+    }
+    var Url = '/pages/single/single?goodsid=' + id + '&title=' + name + '&desc=' + desc + '&price=' + price + '&discount=' + discount + '&pricetype=' + pricetype;
+    console.log(Url);
+    wx.navigateTo({
+      url: Url
+    })
   }
 })
