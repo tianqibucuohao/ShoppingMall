@@ -86,6 +86,7 @@ Page({
   },
   buy :function() {
     console.log('buy them all');
+    var ukey = wx.getStorageSync('session_ck');
     var Url = app.globalData.host+'gen.php';
     wx.request({
       url: Url,
@@ -95,6 +96,7 @@ Page({
       },
       dataType: "json",
       data:{
+        key:ukey,
         bill:app.globalData.shop.goods,
         sum:app.globalData.shop.sum,
         date:app.globalData.shop.date

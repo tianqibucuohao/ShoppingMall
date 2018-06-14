@@ -3,7 +3,7 @@ var defaultOptions = {
   method: 'GET',
   success: noop,
   fail: noop,
-  loginUrl: 'http://192.168.199.103/a.php',
+  loginUrl: 'http://192.168.199.100/a.php',
 };
 var SESSION_KEY = 'session_ck';
 var CookieKey = {
