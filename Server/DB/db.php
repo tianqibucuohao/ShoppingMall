@@ -150,7 +150,7 @@ public function CnlBills($id, $ukey){
 	}
 	$upd = "update billlisttbl set b_status=%d where b_uuid='%s'";
 	$sql = sprintf($upd, $id, $ukey);
-	if (!this->dbh){
+	if (!$this->dbh){
 		return MsgToClient(0, 'data error');
 	}
 	$this->Query($sql);
@@ -172,7 +172,7 @@ public function GetHistoryAllBills($ukey, $strDate, $endDate) {
 		#时段内 - 不会写
 		$ins = "";
 	}
-	if ($this->dbh) {
+	if (!$this->dbh) {
 		return MsgToClient(0, 'data error');
 	}
 	$res = $this->Query($sql);
@@ -185,7 +185,7 @@ public function GetHistoryAllBillsDetail($bid) {
 		return MsgToClient(0, 'can`t find history');
 	}
 	
-	if ($this->dbh) {
+	if (!$this->dbh) {
 		return MsgToClient(0, 'data error');
 	}
 	$ins = "select g_id, g_name, g_count, g_price, g_pricetype, g_total from order_details where b_id = %d";
@@ -194,7 +194,7 @@ public function GetHistoryAllBillsDetail($bid) {
 	return $res;
 }
 
-public function MsgToClient($id, $msg){
+protected function MsgToClient($id, $msg){
 	return json_decode(['err'=>$id, 'msg'=>$msg]);
 }
 /*

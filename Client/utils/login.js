@@ -1,9 +1,12 @@
+const app = getApp();
 var noop = function noop() { };
 var defaultOptions = {
   method: 'GET',
   success: noop,
   fail: noop,
-  loginUrl: 'http://192.168.199.100/a.php',
+  loginUrl: 'http://192.168.199.100/b.php',
+  endata:'',
+  iv:''
 };
 var SESSION_KEY = 'session_ck';
 var CookieKey = {
@@ -42,15 +45,22 @@ var getWxLoginResult = function getLoginCode(callback) {
     code = CookieKey.get()
   }
   var header = {};
+  var dat = (defaultOptions.endata);
+  var iv = (defaultOptions.iv);
+//  console.log(dat);
+//  console.log(iv);
   header['code'] = code;
+  header['x-encoder-data'] = dat;
+  header['x-iv'] = iv;
   wx.request({
-    url: app.globalData.host +'b.php',
+    url: defaultOptions.loginUrl,
     method: 'GET',
     header: header,
     success:function(res){
       if (res.data) {
-        console.log("###########")
+        console.log("#####login######")
         console.log(res.data)
+        console.log("#####login######")
       }
     },
     fail:function(error) {
@@ -61,14 +71,16 @@ var getWxLoginResult = function getLoginCode(callback) {
   
 };
 
-var login = function login(options) { 
+var login = function login(enData, iv) { 
   if (!defaultOptions.loginUrl) {
     console.log('找不到服务器配置')
     return;
   }
+  defaultOptions.endata = enData;
+  defaultOptions.iv = iv;
   var doLogin = getWxLoginResult(function (wxLoginError, wxLoginResult) {
     if (wxLoginError) {
-      options.fail(wxLoginError);
+      //options.fail(wxLoginError);
       return;
     }
     var userInfo = wxLoginResult.userInfo;

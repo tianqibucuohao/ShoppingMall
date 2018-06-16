@@ -1,44 +1,8 @@
 <!--pages/sort/sort.wxml-->
 <view class="userinfo">
-    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 登录 </button>
-    <block wx:else>
-      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
-      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-    </block>
-  </view>
-<text>1231231123</text>fffsdfsdsdsdssssssdfsafd     wwwe
-<view bindtap="viewTap"> click me </view>
-<template name="staffName">
-  <view>
-    FirstName: {{firstName}}, LastName: {{lastName}}
-  </view>
-</template>
-<checkbox checked="{{false}}"> abc</checkbox>
-<view id="item-{{id}}">245 </view>
-<view wx:if="{{condition}}"> 1212</view>
-<view hidden="{{condition?true:false}}">123 hidden</view>
-<view>{{object.key}} {{array[0]}}</view>
-<view wx:for="{{array}}">
-  {{item.msg}}
+  <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 登录 </button>
+  <block wx:else>
+    <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
+    <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+  </block>
 </view>
-<template is="staffName" data="{{...staffA}}"></template>
-<template is="staffName" data="{{...staffB}}"></template>
-<template is="staffName" data="{{...staffC}}"></template>
-<block wx:for="{{[1, 2, 3]}}">
-  <view> {{index}}:{{item}} </view>
-</block>
-<switch>123</switch>
-<switch wx:for="{{objectArray}}" wx:key="unique" style="display: block;"> {{item.id}} </switch>
-<button bindtap="switch"> Switch </button>
-<switch wx:for="{{numberArray}}" wx:key="*this" style="display: block;"> {{item}} </switch>
-
-<!-- 9*9乘法表
-<view wx:for="{{[1, 2, 3, 4, 5, 6, 7, 8, 9]}}" wx:for-item="i">
-  <view wx:for="{{[1, 2, 3, 4, 5, 6, 7, 8, 9]}}" wx:for-item="j">
-    <view wx:if="{{i <= j}}">
-      {{i}} * {{j}} = {{i * j}}
-    </view>
-  </view>
-</view>
-
--->

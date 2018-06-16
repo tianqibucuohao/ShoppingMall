@@ -85,7 +85,7 @@ Page({
     })
   },
   buy :function() {
-    console.log('buy them all');
+    console.log('buy them all== 接口测试成功');
     var ukey = wx.getStorageSync('session_ck');
     var Url = app.globalData.host+'gen.php';
     wx.request({
