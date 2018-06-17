@@ -61,6 +61,9 @@ Page({
             userInfo: res.userInfo,
             hasUserInfo: true
           })
+        },
+        fail: res => {
+          
         }
       })
       console.log("this.data.geterror")

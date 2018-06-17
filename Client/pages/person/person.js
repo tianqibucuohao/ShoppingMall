@@ -1,6 +1,7 @@
 // pages/sort/sort.js
 const app = getApp()
-const utill = require("../../utils/login.js")
+const util = require("../../utils/login.js")
+const common = require("../../utils/util.js")
 Page({
   /**
    * 页面的初始数据
@@ -97,6 +98,12 @@ Page({
 
   },
   getUserInfo : function(ev) {
+    var sret = ev.detail.errMsg.search('ok');
+    if (sret == -1) {
+      
+      return;
+    }
+
     console.log(ev.detail.errMsg)
     console.log(ev.detail.userInfo)
 //    console.log(ev.detail.rawData)
@@ -105,6 +112,7 @@ Page({
     var endata = (ev.detail.encryptedData);
     var iv = (ev.detail.iv);
     
-    utill.login(endata, iv);
+    util.login(endata, iv);
+//    common.showloading();
   }
 })

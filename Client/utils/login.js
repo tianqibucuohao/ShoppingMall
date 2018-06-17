@@ -1,4 +1,4 @@
-const app = getApp();
+const util = require('./util.js')
 var noop = function noop() { };
 var defaultOptions = {
   method: 'GET',
@@ -6,7 +6,8 @@ var defaultOptions = {
   fail: noop,
   loginUrl: 'http://192.168.199.100/b.php',
   endata:'',
-  iv:''
+  iv:'',
+  bLogin:false
 };
 var SESSION_KEY = 'session_ck';
 var CookieKey = {
@@ -39,10 +40,10 @@ var LoginError = (function () {
 })();
 
 var getWxLoginResult = function getLoginCode(callback) {
-  var code = CookieKey.get()
+  var code = CookieKey.get();
   if (!code) {
-    setLoginCk()
-    code = CookieKey.get()
+    setLoginCk();
+    code = CookieKey.get();
   }
   var header = {};
   var dat = (defaultOptions.endata);
@@ -93,7 +94,8 @@ var setLoginUrl = function (loginUrl) {
 };
 
 var setLoginCk = function() {
-  if (!CookieKey.get()) { // 如果本地没有数据，重新请求code
+  var code = CookieKey.get();
+  if (!code) { // 如果本地没有数据，重新请求code
     wx.login({
       success:function(res) {
         if (res.code) {
