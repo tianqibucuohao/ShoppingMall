@@ -14,10 +14,10 @@ App({
     // 打开小程序的路径
     console.log(this.path)
     console.log(this.scene)
-    ck.setLoginCk()
   },
  
   globalData: {
+    hasUserInfo:false,
     userInfo: null,
     logged: false,
     takeSession: false,

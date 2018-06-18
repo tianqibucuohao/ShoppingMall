@@ -17,7 +17,7 @@ class CLogin{
 	private function MsgToClient($id, $code) {
 		return json_encode(['err:'=>$id, 'msg:'=>$code]);
 	}
-	public function Login($code, $endata, $iv) {
+	public function Login($code, $endata, $iv, $nickname) {
 		// 1. getsession key
 		$this->getSessionKey($code);
 		$openid = '';
@@ -25,7 +25,7 @@ class CLogin{
 		if (isset($this->body['errcode']) && isset($this->body['errmsg'])) {
 			return $this->MsgToClient($this->body['errcode'], $this->body['errmsg']);
 		} else if (isset($this->body['session_key']) && isset($this->body['openid'])){
-			echo "sessionKey==empty =>".json_encode($this->body)."\n";
+			#echo "sessionKey==empty =>".json_encode($this->body)."\n";
 			$sessionKey = $this->body['session_key'];
 			$openid = $this->body['openid'];
 		} else {
@@ -37,34 +37,36 @@ class CLogin{
 		}
 		
 		// 2. grant 3rd key(skey)
-		$skey = sha1($sessionKey . mt_rand());
+		$rnd = mt_rand();
+		$skey = sha1($sessionKey . $rnd);
 		// 3 decode data
 
-		$decryptdata = openssl_decrpty(
-			base64_decode($endata),
-			'AES-128-CBC',
-			base64_decode($sessionKey),
-			OPENSSL_RAW_DATA,
-			base64_decode($iv)
-			);
-		$userInfo = json_decode($decryptdata);
+#		$decryptdata = openssl_decrpty(
+#			base64_decode($endata),
+#			'AES-128-CBC',
+#			base64_decode($sessionKey),
+#			OPENSSL_RAW_DATA,
+#			base64_decode($iv)
+#			);
+#		$userInfo = json_decode($decryptdata);
 		// 4. save to db
-		// $db = new DB();
-		// $db->storeUserInfo($userInfo,$skey, $session);
+		$db = new DB();
+		$db->storeUserInfo($nickname, $skey, $sessionKey, $openid);
 		//
-		echo 
-		'skey:'.$skey."\n" 
+#		echo 
+#		'skey:'.$skey."\n" 
 #		.'endata:'.$endata."\n"		
 #		.'iv:'.$iv."\n"				
-		.'sessionKey:'.$sessionKey."\n"			
+#		.'sessionKey:'.$sessionKey."\n"			
 #		.'session_Key:'.$this->body['session_key']."\n"	
 #		.'this->openid:'.$this->body['openid']		
-		. $userInfo
-		 ;
-		return [
+#		. $userInfo
+#		 ;
+		 $userInfo = [];
+		return json_encode([
 				'loginState' =>1,
-				'userInfo' => compact('userInfo','skey')
-			];
+				'skey' => $skey
+			]);
 	}
 
 	private function checkLogin($skey) {
@@ -92,25 +94,26 @@ class CLogin{
 		}
 	}
 
-	private function storeUserInfo($userInfo, $skey, $session_key) {
+	private function storeUserInfo($nickname, $skey, $session_key) {
 		$uuid = bin2hex(openssl_random_pseudo_bytes(16));
 		$create_time=date('Y-m-d H:i:s');
 		$last_visit_time = $create_time;
-		$open_id = $uesrInfo->openId;
-		$user_info = json_encode($uerrInfo);
+		$open_id = $this->body['openid']	;
+		$user_info = $nickname; //json_encode($uerrInfo);
 		// select from 
 		$res = null;
 		if ($res == NULL) {
 			// insert to db
+			
 			return [
 				'loginState'=>0,
-				'userInfo' => []
+				'userInfo' =>''
 			];
 		} else {
 			// updata record to db
 			return [
 					'loginState'=>0,
-					'userInfo' => []
+					'userInfo' => ''
 				];
 		}
 	}
@@ -124,12 +127,14 @@ class CLogin{
 		if ($useQcloudProxy) {
 			$secretId = 'wxc6fd09e5b3639c37';
 			$secretKey = 'b8f65b1960f2b73269adf3c7dd0e1516';
-			list($this->session_key, $this->openid) = array_values($this->useQcProxyGetSessionKey($secrerId, $secretKey, $code));
+		#	list($this->session_key, $this->openid) = array_values($this->useQcProxyGetSessionKey($secrerId, $secretKey, $code));
+			$session_key = $this->useQcProxyGetSessionKey($appId, $appSecret, $code);	
 			return $this->session_key;
 		} else {
 			$appId = 'wxc6fd09e5b3639c37';
 			$appSecret = 'b8f65b1960f2b73269adf3c7dd0e1516';
-			list($session_key, $openid) = array_values($this->GetSessionKeyDirect($appId, $appSecret, $code));	
+			#list($session_key, $openid) = array_values($this->GetSessionKeyDirect($appId, $appSecret, $code));	
+			$session_key = $this->GetSessionKeyDirect($appId, $appSecret, $code);	
 			#echo 'array_values:'.json_encode($body);
 			# list($this->session_key, $this->openid);
 			#echo "this->session_key:".$this->session_key;
@@ -155,8 +160,8 @@ class CLogin{
 		$requestString = http_build_query($requestData);
 		$signatureRawString = $requestMethod . $requestUrl . '?' .$requestString;
 		$requestData['Signature'] = base64_encode(hash_hmac('sha256',$signatureRawString, $secretKey, true));
-		echo "requestData:".$requestData."\n";
-		echo "signatureRawString:".$signatureRawString."\n";
+#		echo "requestData:".$requestData."\n";
+#		echo "signatureRawString:".$signatureRawString."\n";
 		list ($status, $this->body)=array_values(Request::get([
 			'url' => 'https://'.$requestUrl.'?'.http_build_query($requestData),
 			'timeout' => 3000]));

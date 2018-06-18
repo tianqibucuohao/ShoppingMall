@@ -16,8 +16,6 @@ function __construct(){
 function __destruct(){
 	if ($this->dbh)
 		mysql_close($this->dbh);	
-//	else
-//		echo "disconn";
 }
 public function db_connect() {
 	$this->dbh =  mysql_connect($this->dbhost, $this->dbuser, $this->dbpwd);
@@ -27,6 +25,10 @@ public function db_connect() {
 		echo "db_connect error:" . mysql_error();
 }
 
+/*
+ 执行sql
+ 返回当前result set 
+*/
 public function Query($sql){
 	$arry=array();
 	if (!$this->dbh)
@@ -34,8 +36,6 @@ public function Query($sql){
 		echo "conn is over<br />";
 		return "disconn";
 	}
-//	else 
-//		echo "conn is alive<br />";
 	$result = mysql_query($sql,$this->dbh);
 #	echo $sql;
 	if ($result){
@@ -46,15 +46,13 @@ public function Query($sql){
 			$i++;
 		}	
 
-//		echo "<br />not null, array.size=". count($arry);
 	}
-#	else { 
-#		echo "null";
-#	}
-//	echo "<br />########<br />";
 	return $arry;
 }
 
+/*
+查询当前推荐分类
+*/
 public function GetAdSort(){
 	$sql = "select s_id,s_name, s_path from sorttbl where s_bAd = 1";
 	$arry = array();
@@ -63,7 +61,9 @@ public function GetAdSort(){
 	$ret = $this->Query($sql);
 	return $ret;
 }
-
+/*
+查询当前推荐商品
+*/
 public function GetAdGoods() {
 	$sql = "select a.g_id, a.g_name, a.g_price, a.g_discountid, a.g_desc ,a.g_pricetype, b.i_name from goodstbl a, imgpathtbl b where a.g_bAd=1 and a.g_id = b.gs_id group by b.gs_id";
 	$arr = array();
@@ -72,7 +72,9 @@ public function GetAdGoods() {
 	$ret = $this->Query($sql);
 	return $ret;
 }
-
+/*
+查询当前小分类
+*/
 public function GetLittleSort($id) {
 	$arry = array();
 	if (!is_numeric($id))
@@ -83,7 +85,9 @@ public function GetLittleSort($id) {
 	$ret = $this->Query($sql);
 	return $ret;
 }
-
+/*
+查询当前商品的图片资源路径
+*/
 public function GetGoodsImgpath($id) {
 	$arry = array();
 	if (!is_numeric($id))
@@ -94,7 +98,9 @@ public function GetGoodsImgpath($id) {
 	$ret = $this->Query($sql);
 	return $ret;
 }
-
+/*
+查询所有商品分类
+*/
 public function GetAllSorts() {
 	$arry = array();
 	$sql = "select s_id, s_name, s_path, s_bAd from sorttbl";
@@ -103,15 +109,20 @@ public function GetAllSorts() {
 	$ret = $this->Query($sql);
 	return $ret;
 }
-
+/*
+查询所有商品
+*/
 public function GetAllGoods() {
 	$arry = array();
 	$sql = "select a.g_id, a.g_name, a.g_price, a.g_sortid, a.g_discountid, a.g_desc, a.g_pricetype,a.g_bAd, b.i_name from goodstbl a, imgpathtbl b where a.g_id = b.gs_id group by b.gs_id";
 	if (!$this->dbh)
 		return $arry;
-#	$ret = $this->Query($sql);
-#	return $ret;
+	$ret = $this->Query($sql);
+	return $ret;
 }
+/*
+增加新订单
+*/
 public function NewBills($ukey, $count, $sum, $ddate){
 	$sts = 1;
 	$note = "";
@@ -122,9 +133,6 @@ public function NewBills($ukey, $count, $sum, $ddate){
 	
 	$ins = "insert into billlisttbl(b_uuid, b_count, b_total, b_status, b_datetime, b_note, b_dnow) value('%s',%d, %.2f, %d, '%s', '%s', now());";
 	$sql = sprintf($ins, $ukey, $count, $sum, $sts, $ddate, $note);
-#	echo 'ins==>'.$sql;
-#	$b["sql"] = $sql;
-#	echo json_encode($b);
 	if (!$this->dbh){
 		return ['err'=>"error"];
 	}
@@ -134,6 +142,9 @@ public function NewBills($ukey, $count, $sum, $ddate){
 	$res = $this->Query($sql);
 	return $res;
 }
+/*
+增加订单内所有内容
+*/
 public function BillsDetail($arrSql) {
 	$ary = array();	
 	if ($arrSql == ""){
@@ -144,6 +155,9 @@ public function BillsDetail($arrSql) {
 	}
 	$this->Query($arrSql);
 }
+/*
+取消当前订单
+*/
 public function CnlBills($id, $ukey){
 	if ($id == -1 || $id == 0) {
 		return MsgToClient(0, 'idx errot');
@@ -155,7 +169,9 @@ public function CnlBills($id, $ukey){
 	}
 	$this->Query($sql);
 }
-
+/*
+查询当前用户的历史订单
+*/
 public function GetHistoryAllBills($ukey, $strDate, $endDate) {
 	# 取回所有成功订单id ，某时段内
 	# 成功取消的订单不查询
@@ -178,6 +194,9 @@ public function GetHistoryAllBills($ukey, $strDate, $endDate) {
 	$res = $this->Query($sql);
 	return $res;
 }
+/*
+查询当前用户的当前历史订单所有内容
+*/
 public function GetHistoryAllBillsDetail($bid) {
 	#取回详细订单内容
 	$ary = array();
@@ -193,36 +212,61 @@ public function GetHistoryAllBillsDetail($bid) {
 	$res = $this->Query($sql);
 	return $res;
 }
-
+/*
+返回内容格式
+*/
 protected function MsgToClient($id, $msg){
 	return json_decode(['err'=>$id, 'msg'=>$msg]);
 }
+
 /*
- function storeUserInfoToDB($userinfo, $skey, $sessionKey) {
-	$uuid = bin2hex(openssl_random_pseudo_bytes(16));
-	$create_time = date('Y-m-d H:i:s');
-	$last_visit_time = $create_time;
-	$open_id = $userinfo->OpenId;
-	$user_info = json_encode($userinfo);
-	$sql = "select count(*) from cSessionInfo where open_id =" .$open_id;
+检查当前用户key有效性
+*/
+public function CheckSessionKey() {
+	$sql = "select count(*) from userstlb where openid ='" .$openid. "'";
+	if (!$this->dbh) {
+		return "error";	
+	}
+	$res= $this->Query($sql);
+	$bret = false;
+	if (count($res) != 0) {
+		// 已存在key
+	} else {
+		// 不存在key
+	}
+	
+}
+/*
+保存当前用户key
+*/
+public function storeUserInfo($nickname, $skey, $sessionKey, $openid) {
+	//$uuid = bin2hex(openssl_random_pseudo_bytes(16));
+#	$create_time = date('Y-m-d H:i:s');
+#	$last_visit_time = $create_time;
+	$sql = "select count(*) from userstlb where openid ='" .$openid. "'";
+#	echo "storeUserInfo:". $sql;
 	if (!$this->dbh) {
 		return "error";	
 	}
 	$res = $this->Query($sql);
 	$bret = false;
-	if (!$res) {
+	if (count($res)!=0) {
 		$bret = true;
 	}
+	
 	$sql = "";
-	if ($bre) {
-	$sql = "insert into cSessionInfo('open_id','uuid','skey','create_time','last_visit_time','session_key','user_info') values (".$open_id .",".$uuid.",".$skey."," .$create_time.",".$last_visit_time .",". $sessionKey .",". $user_info .")";
+	if ($bret) {
+		$fmt = "insert into userstbl(u_nickname, agree_time, is_vip, openid, sessionKey, randKey, last_visit_time) value('%s', now(), 0, '%s', '%s', '%s', now())";
+		$sql = sprintf($fmt, $nickname, $openid, $sessionKey, $skey);
 	} else {
-	$sql = "update cSessionInfo set uuid=".$uuid.", skey=".$skey.", last_visit_time=".$last_visit_time.", session_key=".$sessionKey.", user_info=".$user_ifon;
+		$fmt = "update userstbl set u_nickname='%s', randKey = '%s', last_visit_time=now(), sessionKey='%s' where openid = '%s'";
+		$sql = sprintf($fmt, $nickname, $skey, $sessionKey, $openid);
 	}
+	#echo "storeUserInfo2:". $sql;
 	$res = $this->Query($sql);
 	return $res;
 }
-*/
+
 
 };
 ?>

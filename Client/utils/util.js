@@ -109,10 +109,16 @@ var showModel = (title, content) => {
   })
 };
 function showloading() {
-  wx.showLoading({
-    title: '加载中',
-  })
+  loading('加载中' );
 };
+function loginloading() {
+  loading('正在登录...')
+}
+function loading(tips) {
+  wx.showLoading({
+    title: tips,
+  })
+}
 function hideloading() {
   wx.hideLoading();
 }
@@ -158,20 +164,9 @@ function SaveStorage(e,b){
   }
 };
 
-function GetStorage(e) {
-  var date = [];
-  try {
-  wx.getStorage({
-    key: e,
-    success: function (res) {
-      console.log(res.data)
-      data = res.data;
-    }
-  }) 
-  }catch(ev) {
-    console.log('get storage='+ev)
-  }
-  return data;
+var SESSION_KEY = 'session_ck';
+function GetStorage() {
+  return wx.getStorageSync(SESSION_KEY || null);
 };
 /*
 * 商品数量增加或减少
@@ -221,5 +216,6 @@ module.exports = {
   GetStorage: GetStorage,
   ShareToFriends: ShareToFriends,
   showloading:showloading,
-  hideloading: hideloading
+  hideloading: hideloading,
+  loginloading: loginloading
 }

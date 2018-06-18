@@ -1,8 +1,27 @@
-<!--pages/sort/sort.wxml-->
-<view class="userinfo">
-  <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 登录 </button>
-  <block wx:else>
-    <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
-    <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-  </block>
+<view>
+  <view wx:if="{{!hasUserInfo && canIUse}}">
+    <button open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 登录 </button>
+  </view>
+  <view wx:else>
+    <view>
+      <view>
+        <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
+        <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+      </view>
+      <view>
+        <view>
+          <button bindtap='GotoTrolley'>查看当前购物篮</button>
+        </view>
+        <view>
+          <button bindtap='showhistoryorder'>查看历史订单</button>
+        </view>
+        <view>
+          <button open-type="contact">客服</button>
+        </view>
+        <view>
+          <button open-type='exit'>退出小程序</button>
+        </view>
+      </view>
+    </view>
+  </view>
 </view>

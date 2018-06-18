@@ -10,7 +10,6 @@ Page({
   },
   onLoad: function (options) {
     this.LoadData();
-//    console.log(this.data.bills);
   },
   onReady: function () {
 

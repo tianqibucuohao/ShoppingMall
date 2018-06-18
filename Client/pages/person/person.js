@@ -11,7 +11,6 @@ Page({
     userInfo: {},
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo')
-    
   },
 
   /**
@@ -40,6 +39,7 @@ Page({
       wx.getUserInfo({
         success: res => {
           app.globalData.userInfo = res.userInfo
+          app.globalData.hasUserInfo = true;
           this.setData({
             userInfo: res.userInfo,
             hasUserInfo: true
@@ -87,11 +87,7 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-    console.log("on share app message")
-    return {
-      title: '自定义转发标题',
-      path: '/page/user?id=123'
-    }
+    common.ShareToFriends();
   },
 
   onReachBottomDistance: function() {
@@ -103,16 +99,36 @@ Page({
       
       return;
     }
-
+    var that = this;
     console.log(ev.detail.errMsg)
     console.log(ev.detail.userInfo)
-//    console.log(ev.detail.rawData)
-//    console.log(ev.detail.encryptedData);
-//    console.log(ev.detail.iv);
-    var endata = (ev.detail.encryptedData);
-    var iv = (ev.detail.iv);
-    
-    util.login(endata, iv);
-//    common.showloading();
+    util.login(function (suc, fail){
+      if (suc) {
+        console.log('usc +'+suc);
+        that.setData({
+          userInfo: suc,
+          hasUserInfo: true,
+        })
+        app.globalData.userInfo = suc;
+        app.globalData.hasUserInfo = true;
+      } else {
+
+      }
+     });
+  },
+  GotoTrolley:function() {
+    wx.switchTab({
+      url: '/pages/trolley/trolley',
+    })
+  },
+  showhistoryorder:function() {
+    var code = common.GetStorage();
+    var Url = '/pages/trolley/trolley?histroy=' + 1;
+    console.log(Url);
+    wx.navigateTo({
+      url: Url
+    })
   }
+
+  
 })

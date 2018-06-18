@@ -19,36 +19,6 @@ Page({
   onLoad: function (options) {
     common.showloading();
     this.GetAll();
-    // 测试用户信息使用-非正式代码内容
-    // if (app.globalData.userInfo) {
-    //   this.setData({
-    //     userInfo: app.globalData.userInfo,
-    //     hasUserInfo: true
-    //   })
-    //   console.log("app.globalData.userinfo true.")
-    // } else if (this.data.canIUse) {
-    //   // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-    //   // 所以此处加入 callback 以防止这种情况
-    //   app.userInfoReadyCallback = res => {
-    //     this.setData({
-    //       userInfo: res.userInfo,
-    //       hasUserInfo: true
-    //     })
-    //   }
-    //   console.log("this.data.canIUse true.")
-    // } else {
-    //   // 在没有 open-type=getUserInfo 版本的兼容处理
-    //   wx.getUserInfo({
-    //     success: res => {
-    //       app.globalData.userInfo = res.userInfo
-    //       this.setData({
-    //         userInfo: res.userInfo,
-    //         hasUserInfo: true
-    //       })
-    //     }
-    //   })
-    //   console.log("this.data.geterror")
-    // }
   },
 
   /**
@@ -88,7 +58,7 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-    console.log("on pull down refresh")
+    this.GetAll();
   },
 
   /**
@@ -114,51 +84,7 @@ Page({
   onReachBottomDistance: function() {
 
   },
-  /**
-   * 当前是 tab 页时，点击 tab 时触发
-   */
-  onTabItemTap: function (item) {
-    // console.log(item.index)
-    // console.log(item.pagePath)
-    // console.log(item.text)
-  },
-  // Event handler.
-  viewTap: function () {
-    // this.setData({
-    //   text: 'Set some data for updating view.',
-    //   data:'hell,sb'
-    // }, function () {
-    //   // this is setData callback
-    //   console.log("click me viewtap")
 
-    // })
-  },
-  switch: function (e) {
-    // const length = this.data.objectArray.length
-    // for (let i = 0; i < length; ++i) {
-    //   const x = Math.floor(Math.random() * length)
-    //   const y = Math.floor(Math.random() * length)
-    //   const temp = this.data.objectArray[x]
-    //   this.data.objectArray[x] = this.data.objectArray[y]
-    //   this.data.objectArray[y] = temp
-    // }
-    // this.setData({
-    //   objectArray: this.data.objectArray
-    // })
-  },
-  ddToFront: function (e) {
-    // const length = this.data.objectArray.length
-    // this.data.objectArray = [{ id: length, unique: 'unique_' + length }].concat(this.data.objectArray)
-    // this.setData({
-    //   objectArray: this.data.objectArray
-    // })
-  },
-  addNumberToFront: function (e) {
-    // this.data.numberArray = [this.data.numberArray.length + 1].concat       (this.data.numberArray)
-    // this.setData({
-    //   numberArray: this.data.numberArray
-    // })
-  },
   GetAll:function() {
     var Url = app.globalData.host + 'all.php';
     var that = this;
